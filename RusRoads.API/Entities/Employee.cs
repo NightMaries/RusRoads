@@ -34,9 +34,6 @@ namespace RusRoads.API.Entity
         public required string Email { get; set; }
         public string? AdditionalInfo { get; set; } = string.Empty;
         public IEnumerable<Event>? Events { get; set; }
-
-        public int? MessuareId { get; set; }
-        public Messuare? Messuare { get; set; }
         public DateTime? DismissDate { get; set; } = null;
     }
 }

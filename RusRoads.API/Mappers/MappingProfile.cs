@@ -16,6 +16,7 @@ namespace RusRoads.API.Mappers
             
             CreateMap<Employee, EmployeeDto>().ReverseMap();
             CreateMap<Event, EventDto>().ReverseMap();
+            CreateMap<Messuare, MessuareDto>().ReverseMap();
             /*
             CreateMap<EmployeeDto, Employee>()
                 .ForMember(dest =>dest.DismissDate, opt=> opt.Ignore())

@@ -141,3 +141,4 @@ Z:\VisualCodeProjects\RusRoads\RusRoads.API\obj\Debug\net9.0\RusRoads.API.pdb
 Z:\VisualCodeProjects\RusRoads\RusRoads.API\obj\Debug\net9.0\RusRoads.API.genruntimeconfig.cache
 Z:\VisualCodeProjects\RusRoads\RusRoads.API\obj\Debug\net9.0\ref\RusRoads.API.dll
 Z:\VisualCodeProjects\RusRoads\RusRoads.API\bin\Debug\net9.0\AutoMapper.dll
+Z:\VisualCodeProjects\RusRoads\RusRoads.API\obj\Debug\net9.0\RusRoads.API.sourcelink.json

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RusRoads.API.DTO;
 using RusRoads.API.Entity;
 
@@ -31,7 +32,7 @@ namespace RusRoads.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Employee>> GetAll()
         {
-            var emp = db.Employee.ToList();
+            var emp = db.Employee.Include(r => r.Subdivision).ToList();
             var empDto = mapper.Map<IEnumerable<EmployeeDto>>(emp);
             return Ok(empDto);
         }

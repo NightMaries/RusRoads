@@ -22,7 +22,9 @@ namespace RusRoads.API.Entity
         public int? MaterialId {get;set;}
         public  Material? Material {get;set;}
         
-        public IEnumerable<Employee>? Employees {get;set;}
+        public int? AuthorId {get;set;}
+        [ForeignKey ("AuthorId")]
+        public Employee? Author {get;set;}
         public IEnumerable<Subdivision>? Subdivisions {get;set;}
 
     }
