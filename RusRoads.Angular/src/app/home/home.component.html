@@ -1,0 +1,29 @@
+<div style="border: 1xp solid;"> Сотрудники
+    <div class="employees">
+        @for(e of employees; track $index){
+            <div class="emp-card">
+                <app-employee [employee]="e" [graphMode]="false" />
+            </div>
+        }
+    </div>
+    <div style="display: flex;">
+        <div>
+            <app-calendar/>
+            <div class="messuares">
+                @for (m of messuares; track $index) {
+                    <app-messuares [messuare]="m"/>
+                }
+            </div>  
+        </div>
+        <div class="news">
+            @for (n of news; track $index) {
+                <div style="border: 1px solid; margin: 1rem; padding: 1rem; width:465px;">
+                    <a href="{{n.link}}">{{n.title}}</a>
+                    <p>
+                        <img   height="200" width="200" src="{{n.url}}"/>
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

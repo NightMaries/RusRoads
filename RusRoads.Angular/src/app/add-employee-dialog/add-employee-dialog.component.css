@@ -1,0 +1,20 @@
+.event
+{
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid;
+    border-radius: 45px;
+}
+.addEventForm{
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid;
+    border-radius: 30px;
+    background-color: #78B24B;
+}
+.remove{
+    
+    margin: auto;
+    padding: auto;
+    border: 1px solid;
+}

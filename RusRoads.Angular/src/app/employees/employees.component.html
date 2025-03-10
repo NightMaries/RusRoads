@@ -1,0 +1,12 @@
+<div class="employee">
+    @if(employees.length != 0 ){
+        @for(e of employees; track $index){
+            <p> <app-employee [employee]="e"  (selectEmployee)="editEmployee($event)"
+                              [graphMode]="true" (dismissEmployee)="dismissEmployee($event)"
+                                               />
+
+            </p>
+        }}
+        <button (click)="addEmployee()"><mat-icon>add</mat-icon></button>
+    
+</div>

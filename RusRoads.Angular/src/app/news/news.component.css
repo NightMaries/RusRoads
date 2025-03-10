@@ -1,0 +1,7 @@
+.news{
+    display: flex;
+    flex-flow: wrap;    
+    border: 1xp solid;
+    width: 150px;
+    height: 150px;
+}

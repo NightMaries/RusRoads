@@ -1,0 +1,24 @@
+.employees{
+    display: flex;
+    border: 1xp solid black;
+    width: auto;
+    overflow-x: auto;
+    height: auto;
+}
+
+
+.news{
+    display: flex;
+    flex-flow: wrap;    
+    border: 1xp solid;
+    flex:4;
+    height: 600px;
+    overflow-y: auto;
+}
+.messuares{
+    border: 1px solid;
+    flex:2;
+    height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

@@ -1,0 +1,13 @@
+<div class="header">
+    <img src="Logo.png" width="80" height="80" [routerLink]="['/']"/>
+    <strong [routerLink]="['/']">Структура оргарнизации</strong>
+    <strong [routerLink]="['/home']" >Новости</strong>
+    <div style="margin-left: 15px;">
+        <input type="search"
+            [(ngModel)]="searchString"
+            (keyup)="searchComplex()" 
+            (search)="search()"
+            placeholder="поиск по новостям, сотрудникам и событиям"
+            style="width: 300px;">
+    </div>
+</div>

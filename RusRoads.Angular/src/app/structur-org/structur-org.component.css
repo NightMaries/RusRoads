@@ -1,0 +1,10 @@
+.struct-org
+{
+    margin: 1rem;
+    height: 450px;
+}
+.employees{
+    margin: 1rem;
+    overflow-y: auto;
+    height: 450px;
+}

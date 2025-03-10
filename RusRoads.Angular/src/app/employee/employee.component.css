@@ -1,0 +1,16 @@
+.emp{
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid;
+    border-radius: 45px;
+}
+.employee-dismiss{
+    background-color: gainsboro;
+}
+.empHome{
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid;
+    border-radius: 45px;
+    width: 350px;
+}

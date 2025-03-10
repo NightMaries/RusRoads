@@ -1,0 +1,8 @@
+<mat-calendar  *ngIf="isDataLoaded" [dateClass]="dateClass" />
+<ng-template let-date>
+    <span *ngIf="getBirthdaysTooltip(date)" 
+          matTooltip="{{ getBirthdaysTooltip(date) }}" 
+          class="birthday-icon">
+      🎂
+    </span>
+  </ng-template>
