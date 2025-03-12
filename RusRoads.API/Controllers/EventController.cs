@@ -35,7 +35,6 @@ namespace RusRoads.API.Controllers
             if(!oldEvents && currentEvents && !futureEvents) r = eventsCurrent.ToList();
             if(!oldEvents && !currentEvents && futureEvents) r = eventsFutures.ToList();
             
-            
             var eventsDto = mapper.Map<IEnumerable<EventDto>>(r);
            
             return Ok(eventsDto);
@@ -77,6 +76,13 @@ namespace RusRoads.API.Controllers
            
             return Ok(eventsDto);
         }
-    
+        [HttpGet ("/api/v1/workingCalendar")]
+        public ActionResult<IEnumerable<EventDto>> getWorkCal()
+        {
+
+            var workCal = db.workingCalendar.Select( r=>new {r.Id, r.IsWorkingDay, r.ExceptionDate}).ToList();   
+           
+            return Ok(workCal);
+        }
     }
 }

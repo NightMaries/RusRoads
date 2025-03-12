@@ -1,7 +1,7 @@
 @if(employee){
 <div *ngIf="checkDismissDateEmp(employee)" class="emp" [ngClass]="classMode" [class.employee-dismiss]="employee.dismiss_date"  (click)="getEmp(employee)">
     <p> Сотрудник: {{employee.fio}} </p>
-    <p> Подразделение: {{employee.subdivision!.name}} </p>
+    <p> Подразделение: {{employee.subdivision?.name}} </p>
     <p> Должность: {{employee.position}} </p>
     <p> Телефон: {{employee.job_number}} </p>
     <p> Кабинет: {{employee.cabinet}} </p>
@@ -10,8 +10,7 @@
 <button *ngIf="!employee.dismiss_date && graphMode" (click)="dismissEmp(employee); $event.stopPropagation()"><mat-icon>delete</mat-icon></button>
 <button *ngIf="!employee.dismiss_date && !graphMode" (click)="toogleCode()"><mat-icon>save</mat-icon></button>
 <div *ngIf="isQRCodeShow">
-    <qrcode [qrdata]="employee.fio"/>
+    <qrcode [qrdata]="getVCardQr(employee)"/>
 </div>
 </div>
-
 }

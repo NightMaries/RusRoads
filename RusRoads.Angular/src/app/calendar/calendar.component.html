@@ -1,8 +1,14 @@
-<mat-calendar  *ngIf="isDataLoaded" [dateClass]="dateClass" />
+<div style="width: 400px;">
+  <mat-calendar *ngIf="eventLoaded" [dateClass]="dateClass">
+  </mat-calendar>
+</div>
+<!--
 <ng-template let-date>
-    <span *ngIf="getBirthdaysTooltip(date)" 
-          matTooltip="{{ getBirthdaysTooltip(date) }}" 
-          class="birthday-icon">
-      🎂
+    <span 
+          [matTooltip]="getBirthdaysTooltip(date)" 
+          class="image-date">
+      @for(e of employees; track $index){
+        {{e.fio}}
+      }
     </span>
-  </ng-template>
+  </ng-template>-->

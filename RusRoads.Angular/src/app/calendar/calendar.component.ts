@@ -2,14 +2,15 @@ import { AfterViewInit, ChangeDetectorRef, Component, inject, OnInit, ViewChild,
 import { DateAdapter } from '@angular/material/core';
 import {MatCalendar, MatCalendarCellClassFunction, MatDatepickerModule} from "@angular/material/datepicker"
 import { RssService } from '../../Services/rss.service';
-import { map, tap } from 'rxjs';
-import { WorkingCalendar } from '../../interfaces/workingcalendar';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import { Event } from '../../interfaces/event';
 import { EventService } from '../../Services/event.service';
 import { Employee } from '../../interfaces/employee';
 import { EmpService } from '../../Services/emp.service';
 import {MatTooltipModule} from '@angular/material/tooltip'
 import { CommonModule } from '@angular/common';
+import { WorkingCalendar } from '../../interfaces/workingCalendar';
+import { AppService } from '../../../app.service';
 
 @Component({
   selector: 'app-calendar',
@@ -21,87 +22,81 @@ import { CommonModule } from '@angular/common';
 export class CalendarComponent implements AfterViewInit {
 
 
-  workingCalendar: WorkingCalendar[] = []
   events: Event [] = []
   employees: Employee []=[]
 
-  cdr = inject(ChangeDetectorRef)
+  workingCal: WorkingCalendar[] = []
   empService = inject(EmpService)
   eventService= inject(EventService)
   rssService = inject(RssService)
-
-  bornDates: Date[] = []
+  eventLoaded:boolean = false
   
-
-  isDataLoaded: boolean = false;
-  @ViewChild(MatCalendar) calendar!:MatCalendar<Date>
- 
-  ngOnInit():void{
-    this.rssService.getWorkingCalendar().pipe(tap(item => {
-      // Выводим исходные данные для отладки
-      console.log('Received data:', item);
-    }),
-    map(items => {
-      // Преобразуем данные
-      return items.map(e => ({
-        ...e,
-        ecxeption_date: new Date(e.ecxeption_date)
-      }));
-    })
-  ).subscribe(
-    transformedItems => {
-      // Выводим уже преобразованные данные
-      this.workingCalendar = transformedItems;
-      console.log('Transformed data:', this.workingCalendar);
-    },
-    error => {
-      console.error('Error loading data:', error);
-    })
-
-    this.empService.getAll().pipe(
-      tap(r => console.log(r)),
-      map((r) => this.employees = r.map( e => ({
-        ...e, date_born:new Date(e.date_born)
-      })))
-    ).subscribe()
-   
-    if (this.calendar) {
-      this.calendar.updateTodaysDate();
-      this.cdr.detectChanges();
-    }
-    this.isDataLoaded = true; 
-  }
-
   ngAfterViewInit(): void {
     
+    this.empService.getAll().subscribe(r =>{ console.log(r), this.employees = r.map(e => ({
+      ...e,
+      date_born: new Date(e.date_born)
+      })
+    )
+  })
+  this.eventService.getWorkingCal().subscribe(r =>{
+    this.workingCal = r.map(w => ({
+      ...w,
+      exception_date: new Date(w.exception_date)
+    }))
+  },e => console.log(e))
+
+  
+    this.eventService.getAllEvents().subscribe(
+      (r) => {
+        this.events = r.map(e => ({...e, date_start: new Date(e.date_start)}) )
+        this.eventLoaded = true
+    })
+
   }
   
-  getBirthdaysTooltip(date: Date): string {
-    const birthdayEmployees = this.employees
-      .filter(e => e.date_born.toDateString() === date.toDateString())
-      .map(e => e.fio);
-      
-    return birthdayEmployees.length ? birthdayEmployees.join(', ') : '';
-  }
+  dateClass= (date :Date):string =>
+  {
+    let hasBirthday = false;
+    let counterEvents = 0
+    let highlightDay = false
 
-  dateClass1 = (date: Date) => {
-    console.log(this.workingCalendar)
-    return this.workingCalendar.some(d => d.ecxeption_date.toDateString() === date.toDateString()) ? 'highlight-day' : '';
-  };
-  dateClass = (date:Date): string => {
+    this.workingCal.forEach( w => {
+      console.log(w.exception_date)
+      if(w.exception_date.getDate() == date.getDate() &&
+         w.exception_date.getMonth() == date.getMonth() &&
+         w.exception_date.getFullYear () == date.getFullYear())
+          highlightDay = true 
+    })
+    this.employees.forEach(e => 
+      {
+        if(e.date_born.getDate() === date.getDate()&&
+          e.date_born.getMonth() === date.getMonth()&&
+          e.date_born.getFullYear() === date.getFullYear())
+            {
+              hasBirthday = true
+            }
+    })
+    if(date.getDay() == 0 ||date.getDay() == 6 )
+      highlightDay = true
+    
+    this.events.forEach(e =>{
+    if(e.date_start.getDate() === date.getDate()&&
+       e.date_start.getMonth() === date.getMonth()&&
+       e.date_start.getFullYear() === date.getFullYear())
+       {counterEvents ++
+        console.log('counter: '+counterEvents)
+      }})
+
+
+      if (counterEvents >= 5) return 'redClass';  
+      if (counterEvents < 2 && counterEvents != 0) return 'greenClass'; 
+      if (counterEvents >= 2 && counterEvents <= 4) return 'yellowClass'; 
  
-  const dateStr = date.toDateString(); // Преобразуем дату в строку для сравнения
-
-  if (this.workingCalendar.some(wc => new Date(wc.ecxeption_date).toDateString() === dateStr && wc.is_working_day)) {
-    console.log("hi1")
-    return "highlight-day";
+      return hasBirthday ? 'image-date' : highlightDay ? 'highlight-day' : '';
+      
   }
-
-  if (this.employees.some(e => new Date(e.date_born).toDateString() === dateStr)) {
-    return "image-date"; // Используем "image-date" для отображения иконки 🎂
-  }
-  return ""
-  }
-  
-  
 }
+
+  
+

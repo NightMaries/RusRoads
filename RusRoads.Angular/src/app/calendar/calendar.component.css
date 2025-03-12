@@ -1,25 +1,60 @@
 
 .highlight-day{
     span{    
-        color: black !important;
+        color: red;
     }
 }
-
-.image-date{
-    visibility: hidden;
-    position: relative;
+button.redClass{
+    background-color: #FC4343;
+    border-radius: 50px;
+    
 }
-.image-date .mat-calendar-body-cell-content::after{
+button.greenClass{
+    
+    border-radius: 50px;
+    background-color: #89FC43;
+}
+button.yellowClass{
+    
+    border-radius: 50px;
+    background-color: #F8FC43 ;
+}
+
+.image-date {
+    visibility: hidden; /* Скрываем текст даты */
+    position: relative;
+  }
+  
+.image-date .mat-calendar-body-cell-content::after {
     content: '🎂';
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    width: 24px;
+    transform: translate(-50%, -50%);
+    width: 24px; /* Размер изображения */
     height: 24px;
-    visibility: visible;
-}
+    visibility: visible; /* Показываем изображение */
+  }
 
 .mat-calendar-body-label{
     visibility: hidden;
+}
+
+.image-date::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 12px;
+    display: none;
+}
+
+.image-date:hover::before {
+    display: block;
 }

@@ -66,7 +66,7 @@ export class EditEmployeeDialogComponent implements AfterViewInit{
     
     this.eventService.getEmpEvent(this.currentEmp.id,this.is_old,this.is_current,this.is_future).pipe(
       tap((r) => console.log(r)),
-      map((r) => this.events = r),
+      map((r) => this.events  = r),
     ).subscribe()
 
   }

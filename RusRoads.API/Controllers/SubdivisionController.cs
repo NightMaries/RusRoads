@@ -43,7 +43,6 @@ namespace RusRoads.API.Controllers
         {
 
             var listEmp = new List<Employee>();
-
             var listSub = new List<Subdivision>();
 
             var currentEmp = GetEmployees(subdivisionId);

@@ -48,7 +48,6 @@ export class SubdivisionsComponent implements OnInit {
 
   GetEmployeeAllBySub(data:any){
     this.subService.currentSubId$.next(data.id);
-
     this.subService.GetEmpBySubAll(data.id).pipe(
       tap(r => {console.log(r)}),
       tap(r => this.subService.employeeAll$.next(r)),
@@ -59,15 +58,7 @@ export class SubdivisionsComponent implements OnInit {
       })).subscribe()
   }
   
-  shortTitle(title:string)
-  {
-    var splitArr = title.trim().split(" ")
-    var resultArr: string[] = []
-    splitArr.forEach(e => {
-      resultArr.push(e.slice(0,3))
-    });
-    return resultArr.join(".").toUpperCase().slice(0,7)
-  }
+  
   GetNodeWidth(node:Node):number {
     return (node.label!.length)*11
   }

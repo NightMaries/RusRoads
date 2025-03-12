@@ -19,6 +19,7 @@ export class NewsComponent implements OnInit {
       tap((p) => console.log(p)),
       map((p) => this.news = p)
     ).subscribe()
+    
   }
 
 

@@ -27,11 +27,15 @@ throw new Error('Method not implemented.');
   @Input()
   graphMode: boolean = true
   isQRCodeShow:boolean = false
-  classMode:string = "empGraph"
+  qrData:string =""
+  classMode:string = "emp"
+  lastName:string=""
+  firstName:string = ""
+  
 
   checkDismissDateEmp(emp: Employee): boolean{
     if(this.graphMode)
-      this.classMode = "empGraph"
+      this.classMode = "emp"
     else
      this.classMode = "empHome"
 
@@ -43,7 +47,27 @@ throw new Error('Method not implemented.');
     
     return dismissDate < new Date() ? false:true
   }
-    
+
+  
+  getVCardQr(emp:Employee):string{
+    this.splitFIO(emp.fio)
+    return `BEGIN:VCARD
+VERSION:3.0
+N:${this.firstName}
+FN:${this.lastName}
+ORG:\t${emp.subdivision?.name}
+TITLE:${emp.position}
+TEL;WORK;VOICE:${emp.job_number}
+TEL;CELL:${emp.personal_phone}
+EMAIL;WORK;INTERNET:${emp.email}
+END:VCARD`  
+  }
+
+  splitFIO(FIO:string){
+    const parts = FIO.trim().split(/\s+/);
+    this.firstName = parts[0] || ''
+    this.lastName = parts[1] || ''
+  }
 
   getEmp(employee:Employee)
   {
@@ -55,9 +79,6 @@ throw new Error('Method not implemented.');
   }
   toogleCode(){
     this.isQRCodeShow = !this.isQRCodeShow
-    if(this.isQRCodeShow)
-      return true
-    else
-      return false
+    return this.isQRCodeShow ? true :false
   }
 }

@@ -5,7 +5,7 @@ import { SubdivisionService } from '../../Services/subdivision.service';
 import { EmployeeComponent } from "../employee/employee.component";
 import {MatIconModule} from '@angular/material/icon'
 import { CommonModule } from '@angular/common';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog'
+import { MatDialog, MatDialogModule} from '@angular/material/dialog'
 import { AddEmployeeDialogComponent } from '../add-employee-dialog/add-employee-dialog.component';
 import { EmpService } from '../../Services/emp.service';
 import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employee-dialog.component';
@@ -34,8 +34,7 @@ export class EmployeesComponent implements OnInit {
     this.currentSubId = r
     this.subService.GetEmpBySubAll(r).subscribe( e => {
       this.currentEmployees = e;
-      console.log(e)
-      })
+      console.log(e)})
     this.subService.employeeAll$.subscribe( r => this.employees = r)
     })
   }
@@ -55,8 +54,11 @@ export class EmployeesComponent implements OnInit {
           error => {console.log(error.message)}
 
       )}
-      this.subService.GetEmpBySubAll(result.subdivision_id).subscribe(r => this.employees = r)
-      this.subService.employeeAll$.next(this.employees)
+      this.subService.currentSubId$.next(result.subdivision_id)
+      this.subService.GetEmpBySubAll(result.subdivision_id).subscribe(r => {this.employees = r;
+        console.log(this.employees)
+        this.subService.employeeAll$.next(this.employees)
+      })
   })
   }
 
@@ -68,31 +70,31 @@ export class EmployeesComponent implements OnInit {
       switchMap(() => this.subService.GetEmpBySubAll(this.currentSubId))
      )
      .subscribe( e => this.subService.employeeAll$.next(this.employees)) 
-  
-    }
+      this.subService.currentSubId$.next($event.subdivision_id)
+      this.subService.GetEmpBySubAll($event.subdivision_id).subscribe(r => {this.employees = r;
+        console.log(this.employees)
+        this.subService.employeeAll$.next(this.employees)
+      })
+  }
+
   editEmployee($event: any)
   {
 
-    $event.date_born =$event.date_born.toString().split('T')[0]
+    $event.date_born = $event.date_born.toString().split('T')[0]
     const dialogRef = this.dialog.open(
-      EditEmployeeDialogComponent,
-      {data:[this.currentEmployees,$event,false], autoFocus:true, width:"100%", maxWidth: "98%", height:"auto" }
-    )
+        EditEmployeeDialogComponent,
+        {data:[this.currentEmployees,$event,false], autoFocus:true, width:"100%", maxWidth: "98%", height:"auto" })
 
-    dialogRef.afterClosed().subscribe( r => {
+      dialogRef.afterClosed().subscribe( r => {
       if(r && r as Employee)
       {  
-      r.subdivision = null
-      this.empService.update(r).subscribe(next => {
+        r.subdivision = null
+        this.empService.update(r).subscribe(next => {
           console.log(r)},
-          error => console.log(error.message) 
-        )
+          error => console.log(error.message) )
       }
-    }
+      }
     )
-    {
-
-    }
   }
 
 }

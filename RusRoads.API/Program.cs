@@ -22,6 +22,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
+
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddDbContext<RusRoadsContext>(o => 
@@ -35,8 +36,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         {
             ValidateIssuer = false,
             ValidateLifetime = false,
-            ValidateIssuerSigningKey = true,
             ValidateAudience = false,
+            
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"]!))
         };
 });

@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { News } from '../interfaces/news';
 import { map, Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment.development';
-import { WorkingCalendar } from '../interfaces/workingcalendar';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +37,5 @@ export class RssService {
     })
   }
 
-  getWorkingCalendar(){
-    return this.http.get<WorkingCalendar[]>(environment.url+"workingCalendar")
-  }
+  
 }

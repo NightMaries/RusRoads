@@ -9,22 +9,21 @@ import { Employee } from '../interfaces/employee';
 })
 export class SubdivisionService {
 
-  employeeAll : Employee[] = []
-  employeeAll$ = new BehaviorSubject<Employee[]>(this.employeeAll)
+  employeeAll$ = new BehaviorSubject<Employee[]>([])
   currentSubId$ = new ReplaySubject<number>(1)
   
   url = "http://localhost:5193/api/v1/"
   http = inject(HttpClient)
 
-  GetSubdivisionAll(): Observable<Subdivision[]>
+  GetSubdivisionAll()
   {
     return this.http.get<Subdivision[]>(this.url + "Subdivisions")
   }
-  GetEmpBySub(subId:number):Observable<Employee[]>
+  GetEmpBySub(subId:number)
   {
     return this.http.get<Employee[]>(`${this.url}${subId}/employee`)
   }
-  GetEmpBySubAll(subId:number):Observable<Employee[]>
+  GetEmpBySubAll(subId:number)
   {
     return this.http.get<Employee[]>(`${this.url}${subId}/employeeAll`)
   }

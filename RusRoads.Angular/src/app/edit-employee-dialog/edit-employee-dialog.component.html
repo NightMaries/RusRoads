@@ -59,50 +59,55 @@
                 </p>
                 <button (click)="EditModeToogle()"><mat-icon>edit</mat-icon></button>
             </form>
-            <ng-template #emptyBlock>
-                <h3>У сотрудника нет событий</h3>
-            </ng-template>
-            <div class="event">
-                <mat-checkbox [(ngModel)]="is_old" (change)="filterEvents()">Прошедшие</mat-checkbox>
-                <mat-checkbox [(ngModel)]="is_current" (change)="filterEvents()">Текущие</mat-checkbox>
-                <mat-checkbox [(ngModel)]="is_future" (change)="filterEvents()">Будующие</mat-checkbox>
-
-                <h3>Отпуска</h3>
-                @for(event of events; track $index)
-                {
-                    @if(event.event_type_id == 1)
+            @if(events){
+            
+                <div class="event" >
+                    <mat-checkbox [(ngModel)]="is_old" (change)="filterEvents()">Прошедшие</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="is_current" (change)="filterEvents()">Текущие</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="is_future" (change)="filterEvents()">Будующие</mat-checkbox>
+    
+                    <h3>Отпуска</h3>
+                    @for(event of events; track $index)
                     {
-                        <div>{{event.date_start | date}} - {{event.date_end | date}}:{{event.description}}
-                            <div (click)="deleteEvent(event)"><mat-icon class="remove">remove</mat-icon></div>
-                        </div>
-                    }   
-                }
-                <h3>Отгулы</h3>
-                @for(event of events; track $index)
-                {
-                    @if(event.event_type_id == 2)
+                        @if(event.event_type_id == 1)
+                        {
+                            <div>{{event.date_start | date}} - {{event.date_end | date}}:{{event.description}}
+                                <div (click)="deleteEvent(event)"><mat-icon class="remove">remove</mat-icon></div>
+                            </div>
+                        }   
+                    }
+                    <h3>Отгулы</h3>
+                    @for(event of events; track $index)
                     {
-                        <div>{{event.date_start | date}} - {{event.date_end | date}}:{{event.description}}
-                            <div (click)="deleteEvent(event)"><mat-icon class="remove">remove</mat-icon></div>
-                        </div>
-                    }   
-                }
-                <h3>Обучения</h3>
-                @for(event of events; track $index)
-                {
-                    @if(event.event_type_id == 3)
+                        @if(event.event_type_id == 2)
+                        {
+                            <div>{{event.date_start | date}} - {{event.date_end | date}}:{{event.description}}
+                                <div (click)="deleteEvent(event)"><mat-icon class="remove">remove</mat-icon></div>
+                            </div>
+                        }   
+                    }
+                    <h3>Обучения</h3>
+                    @for(event of events; track $index)
                     {
-                        <div>{{event.date_start | date}} - {{event.date_end | date}}:{{event.description}}
-                            <div (click)="deleteEvent(event)"></div><mat-icon class="remove">remove</mat-icon>
-                        </div>
-                    }   
-                }
-                <p>
-                    <button (click)="visibleAddEventToogle()">
-                        <mat-icon>add</mat-icon><mat-icon>event</mat-icon>
-                    </button>
-                </p>
-            </div>
+                        @if(event.event_type_id == 3)
+                        {
+                            <div>{{event.date_start | date}} - {{event.date_end | date}}:{{event.description}}
+                                <div (click)="deleteEvent(event)"></div><mat-icon class="remove">remove</mat-icon>
+                            </div>
+                        }   
+                    }
+                    <p>
+                        <button (click)="visibleAddEventToogle()">
+                            <mat-icon>add</mat-icon><mat-icon>event</mat-icon>
+                        </button>
+                    </p>
+                </div>
+            }
+            @else{
+                <ng-template #emptyBlock>
+                    <h3>У сотрудника нет событий</h3>
+                </ng-template>
+            }
             <div class="addEventForm" *ngIf="isVisibleAddEvent">
                 <form #eventForm="ngForm">
                     <p>

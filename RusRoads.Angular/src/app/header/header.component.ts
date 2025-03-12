@@ -16,7 +16,7 @@ export class HeaderComponent {
   searchString = ""
 
   searchComplex() {
-    this.appService.searchString$.next( this.searchString)
+    this.appService.searchString$.next(this.searchString)
   }
 search() {
   this.searchString = ''

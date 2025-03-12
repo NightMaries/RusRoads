@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { Observable } from 'rxjs';
 import { Event } from '../interfaces/event';
+import { WorkingCalendar } from '../interfaces/workingCalendar';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,10 @@ export class EventService {
   deleteEvent(eventId: number){
     return this.http.delete(environment.url+"Event/"+`${eventId}`)
   }
-  getAllEvents(){
+  getAllEvents():Observable<Event[]>{
     return this.http.get<Event[]>(environment.url+"Event")
+  }
+  getWorkingCal():Observable<WorkingCalendar[]>{
+    return this.http.get<WorkingCalendar[]>(environment.url+"WorkingCalendar")
   }
 }

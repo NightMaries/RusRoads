@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using NpgsqlTypes;
 
 namespace RusRoads.API.Entity
 {
@@ -16,12 +17,13 @@ namespace RusRoads.API.Entity
 
         public DateTime DateStart {get;set;}
         public DateTime DateEnd {get;set;}
+        public DateTime DateCreated{get;set;}
         public string ResponsiblePerson {get;set;} = string.Empty;
         public string Description {get;set;}= string.Empty;  
         
         public int? MaterialId {get;set;}
         public  Material? Material {get;set;}
-        
+        public  required string Region {get;set;}
         public int? AuthorId {get;set;}
         [ForeignKey ("AuthorId")]
         public Employee? Author {get;set;}

@@ -2,6 +2,7 @@
     <p>{{messuare.name}}</p>
     <p>{{messuare.description}}</p>
     <p>{{messuare.responsible_person}}</p>
-    <div style="display: flex;"><mat-icon>event</mat-icon><span style="margin-left: 10px;">{{messuare.date_start}}</span></div>
-
+    <div style="display: flex;">
+        <button (click)="donwloadICS()"> <mat-icon>event</mat-icon></button>
+        <span style="margin-left: 10px;">{{messuare.date_start}}</span></div>
 </div>
